@@ -1,0 +1,62 @@
+Pitanja prije zadataka?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Igrac ima pusku i ispucava metke (GetMouseButton(0)). Metci nakon stvaranja imaju forward velocity i igrac u pusci ima 25 metaka. Nakon sto ispuca svih 25 metaka neka igrac pritisne R da bi reload-ao pusku. Ammo mora biti prikazan na UI-u kao i kad potrosi sve metke da stisne R da reload-a. reload traje 2 sekunde
+
+
+
+
+
+
+
+
+Napravite playera i enemy-a, kad se player sudari sa neprijateljem, player gubi 20 health-a, nakon kolizije, neprijatelj se unisti. Gubitak HP-a prikazite na ekranu (game view) putem slike i texta ( postotci) te nakon sto igrac izgubi sav health, neka se stvori panel sa resetom gdje igramo sve ispocetka
+
+
+
+
+
+
+
+
+
+
+
+
+Napravite collectable item ( sta god zelite) koji ce se pokupiti kad igrac prodje kroz njih, predmet na sceni nestane te se poveca score za neki broj. Score se treba prikazati na UI-u i nakon sto se pokupe svi predmeti na sceni ili nakon sto istekne vrijeme neka se score sacuva samo ako je bolji od prethodnog
+
+
+
+
+
+
+
+
+
+
+
+
+Napravite vrata koja su zakljucana i mogu se otkljucati samo ako igrac pokupi kljuc. Nakon sto je igrac pokupio kljuc i ako je blizu vrata mora pritisnuti tipku E ( ispis na ekranu) da bi otvorio vrata. 
+
+
+
+
+
+
+
+
+
+
