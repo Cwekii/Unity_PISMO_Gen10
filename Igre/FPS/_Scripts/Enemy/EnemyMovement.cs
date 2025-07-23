@@ -4,9 +4,8 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     public Transform playerTarget;
-    [SerializeField] private float movementSpeed = 10f;
+    [SerializeField] public float movementSpeed = 10f;
     [SerializeField] private float damage = 20f;
-    
     
     private void Update()
     {
@@ -14,6 +13,7 @@ public class EnemyMovement : MonoBehaviour
             transform.position,
             playerTarget.position,
             movementSpeed * Time.deltaTime);
+        transform.LookAt(playerTarget.position);
     }
 
     private void OnCollisionEnter(Collision other)
