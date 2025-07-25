@@ -13,6 +13,8 @@ public enum FireMode
 public class Gun : MonoBehaviour
 {
     [SerializeField] private TMP_Text bulletText;
+
+    [SerializeField] private GameObject[] guns;
     
      [Header("Gun Parameters")] [SerializeField]
      private float singleFireCooldown = 0.5f;
@@ -37,7 +39,7 @@ public class Gun : MonoBehaviour
     private bool isFiring = false;
     private bool isReloading = false;
     private bool isZooming = false;
-    
+    int currentGunIndex;
     Camera playerCamera;
 
     private void Start()
@@ -49,6 +51,47 @@ public class Gun : MonoBehaviour
 
     private void Update()
     {
+        Shooting();
+        WeaponZoom(); 
+        Reloading();
+        SwitchFireMode();
+
+        // Switching weapons
+        if (Input.mouseScrollDelta.y > 0)
+        {
+            currentGunIndex++;
+
+            if (currentGunIndex >= guns.Length)
+            {
+                currentGunIndex = 0;
+            }
+            for (int i = 0; i < guns.Length; i++)
+            {
+                guns[i].SetActive(false);
+            }
+
+            guns[currentGunIndex].SetActive(true);
+        }  
+        
+        if (Input.mouseScrollDelta.y < 0)
+        {
+            currentGunIndex--;
+            if (currentGunIndex < 0)
+            {
+                currentGunIndex =  guns.Length - 1;
+            }
+            for (int i = 0; i < guns.Length; i++)
+            {
+                guns[i].SetActive(false);
+            }
+
+            guns[currentGunIndex].SetActive(true);
+        }
+
+    }
+
+    private void Shooting()
+    {
         if (Input.GetMouseButton(0) && canFire && !isFiring && !isReloading)
         {
             Fire();
@@ -58,7 +101,10 @@ public class Gun : MonoBehaviour
                 Debug.Log($"Reloading on mouse button");
             }
         }
+    }
 
+    private void WeaponZoom()
+    {
         if (Input.GetMouseButtonDown(1))
         {
             isZooming = !isZooming; // flip flop
@@ -71,14 +117,20 @@ public class Gun : MonoBehaviour
             {
                 StartCoroutine(SetZoom(maxZoom, minZoom));
             }
-        } 
+        }
+    }
 
+    private void Reloading()
+    {
         if (Input.GetKeyDown(KeyCode.R) && !isReloading)
         {
             Debug.Log($"Reloading");
             StartCoroutine(Reload());
         }
+    }
 
+    private void SwitchFireMode()
+    {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             fireMode = FireMode.SingleFire;
@@ -93,19 +145,6 @@ public class Gun : MonoBehaviour
         {
             fireMode = FireMode.BurstFire;
         }
-
-        if (Input.mouseScrollDelta.y > 0)
-        {
-            Debug.Log($"Mouse scroll up");
-        }  
-        
-        if (Input.mouseScrollDelta.y < 0)
-        {
-            Debug.Log($"Mouse scroll down");
-        }
-
-        
-
     }
 
     IEnumerator SetZoom(float start, float end)
@@ -201,7 +240,6 @@ public class Gun : MonoBehaviour
         {
             Instantiate(bulletPrefab, muzzle.position, muzzle.rotation);
             currentMagazineSize--;
-            Debug.Log("Created Bullet");
         }
         bulletText.text = $"{currentMagazineSize}/{maxAmmo}";
         

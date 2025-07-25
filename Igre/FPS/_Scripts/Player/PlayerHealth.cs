@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +11,7 @@ public class PlayerHealth : MonoBehaviour
    
    [SerializeField] private float currentHealth;
    private bool isInFire;
+   private bool hasHealStarted;
    private float damageTimer;
   
 
@@ -20,8 +23,39 @@ public class PlayerHealth : MonoBehaviour
 
    private void Update()
    {
+      DamagePerSecond();
+      HealPerSecond();
+   }
+
+ /*  private void HealPerSecond()
+   {
       damageTimer += Time.deltaTime;
+
+      if (hasHealStarted && damageTimer >= 5f)
+      {
+         StartHealing(3);
+         hasHealStarted = false;
+         
+      }
+   }
+*/
+   IEnumerator HealPerSecond()
+   {
+      while (damageTimer > 3)
+      {
+         damageTimer += Time.deltaTime;
+         yield return new WaitForEndOfFrame();
+         StartHealing(3);
+         
+      }
+     // yield return new WaitForSeconds(1f);
       
+   }
+
+   private void DamagePerSecond()
+   {
+      damageTimer += Time.deltaTime;
+
       if (isInFire && damageTimer >= 1f)
       {
          TakeDamage(1);
@@ -46,7 +80,8 @@ public class PlayerHealth : MonoBehaviour
          currentHealth = maxHealth;
          return;
       }
-      currentHealth += healAmount;
+     // currentHealth += healAmount;
+    currentHealth =  Mathf.Lerp(currentHealth, currentHealth + healAmount, 1);
       healthBar.fillAmount = currentHealth / maxHealth;
    }
 
@@ -54,5 +89,12 @@ public class PlayerHealth : MonoBehaviour
    {
       isInFire = inFire;
       damageTimer = 0;
+   } 
+   
+   public void Healing(bool isHealing)
+   {
+      hasHealStarted = isHealing;
+      damageTimer = 0;
+      StartCoroutine(HealPerSecond());
    }
 }

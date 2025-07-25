@@ -24,6 +24,7 @@ public class EnemyHealth : MonoBehaviour
         {
             TakeDamage(5);
             damageTimer = 0;
+            
         }
     }
 
