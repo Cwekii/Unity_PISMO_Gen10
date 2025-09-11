@@ -1,0 +1,11 @@
+Napravite scriptable object gdje cete imati ime objekta, opis ( za svaki imajte drugaciji) te prefab. Kroz button prolazite kroz neki collection redom i stvorite prefab i na UI se ispisuje ime i description a prijasnji objekt nestane sa scene
+
+U SO dodajte jos i neki fireRate i posaljite fireRate i na UI (text) i u skriptu koja puca ( ne morate raditi cijelo pucanje, bitno je samo slanje UnityAction na vise skripti
+
+U SO dodajte ammo. Ammo ispisite na text i dodajte gumb za dodavanje municije.
+
+
+
+
+
+
